@@ -50,22 +50,14 @@ def dice_roll(dice, id, modifier = None):
 async def parse_roll(ctx, dice, modifier = None):
     """parse_roll() takes two arguments, a string dice and a string modifier, both with specifics formats, and return nothing. Parses the dice string, and gets the values for a dice roll with that modifier"""
 
-    floorflag = False
-
     # If the modifier exists, it must be an integer
     if modifier is not None:
         try:
-                modifier = modifier.strip()
-                if modifier[0] == "+":
-                    modifier = int(modifier[1:])
-                elif modifier[0] == "-":
-                   # modifier = modifier[1:]
-                   # modifier = modifier.strip()
-                   # modifier = "-" + modifier
-                   # modifier = int(modifier)
-                    modifier = int("-" + modifier[1:].strip())
-                else:
-                    modifier = int(modifier)
+            modifier = modifier.strip()
+            if modifier[0] == "+":
+                modifier = int(modifier[1:])
+            else:
+                modifier = int(modifier)
         except ValueError:
             await ctx.reply("Modifier must be some integer. Please enter a valid modifier.")
             return
@@ -92,8 +84,6 @@ async def parse_roll(ctx, dice, modifier = None):
     # If there is no d or no number before the D, roll that number
     if dice[0:locationOfD] == "" or locationOfD == -1:
        output += dice_roll(int(dice[locationOfD + 1:]), ctx.author.id, modifier)
-       if floorflag:
-           output += "\n With A Floor Of: " + str(floor)
 
        await ctx.reply(output)
 
@@ -109,10 +99,8 @@ async def parse_roll(ctx, dice, modifier = None):
             return
 
         for _ in range(numberOfRolls):
-            output += dice_roll(int(dice[locationOfD + 1:]), ctx.author.id, modifier)
-        if floorflag:
-            output += "\n With A Floor Of: " + str(floor)
-        
+            output += dice_roll(int(dice[locationOfD + 1:]), ctx.author.id, modifier))
+       
         await ctx.reply(output)
 
     return
