@@ -100,6 +100,7 @@ async def parse_roll(ctx, dice, modifier = None):
 
         for _ in range(numberOfRolls):
             output += dice_roll(int(dice[locationOfD + 1:]), ctx.author.id, modifier)
+            output += "\n"
        
         await ctx.reply(output)
 
